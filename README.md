@@ -1,12 +1,38 @@
 # ML-Based Python Code Summarization
 
-This project implements a PyTorch-based Python code summarization tool. It trains a custom LSTM encoder-decoder model with attention on CodeSearchNet Python code/docstring pairs and generates short natural language summaries for Python functions.
+A PyTorch-based Python code summarization tool that generates short natural language summaries for Python functions. The project uses a custom LSTM sequence-to-sequence model with attention and Byte-Level BPE tokenization.
 
 The project does not use a pretrained full language model. The tokenizer and neural model are trained as part of the project pipeline.
 
-## Setup
+## Table of Contents
 
-Create and activate a virtual environment, then install the dependencies:
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Dataset Configuration](#dataset-configuration)
+- [Running the Application](#running-the-application)
+- [Evaluation](#evaluation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Notes](#notes)
+
+## Getting Started
+
+This project trains and evaluates a custom neural code summarization model on the Python split of CodeSearchNet. The model is trained from scratch and does not use a pretrained full language model.
+
+## Prerequisites
+
+- Python 3.x
+- PyTorch
+- pandas
+- numpy
+- nltk
+- rouge-score
+- tokenizers
+
+## Installation
+
+Create and activate a virtual environment, then install the required dependencies:
 
 ```powershell
 python -m venv venv
@@ -14,9 +40,15 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-## Dataset
+## Dataset Configuration
 
-The project expects the Python split of CodeSearchNet in JSONL format. The dataset paths are configured in:
+The project expects the Python split of CodeSearchNet in JSONL format. The dataset used for this project was downloaded from Kaggle:
+
+```text
+https://www.kaggle.com/datasets/omduggineni/codesearchnet
+```
+
+Update the dataset paths in:
 
 ```text
 src/config.py
@@ -29,38 +61,37 @@ Training data: D:/datasets/codesearchnet/python/python/final/jsonl/train
 Test data:     D:/datasets/codesearchnet/python/python/final/jsonl/test
 ```
 
-If the dataset is stored somewhere else, update `DATASET_PATH` and `TEST_DATASET_PATH` in `src/config.py`.
+The dataset itself is not included in the repository.
 
-## Training
+## Running the Application
 
-Run training from the project root:
+Train the model:
 
 ```powershell
 python scripts\train.py
 ```
 
-Training performs preprocessing, trains the Byte-Level BPE tokenizer, builds the dataset tensors, trains the Seq2Seq attention model, and saves the best model based on validation loss.
-
-Main output files:
-
-```text
-outputs/model.pt
-outputs/tokenizer.json
-outputs/code_vocab.pkl
-outputs/doc_vocab.pkl
-outputs/training_history.json
-outputs/training_config.json
-```
-
-## Evaluation
-
-Run evaluation from the project root:
+Run evaluation:
 
 ```powershell
 python scripts\evaluate.py
 ```
 
-Evaluation uses examples from the official CodeSearchNet test split and reports:
+Run inference:
+
+```powershell
+python scripts\summarize.py --input "def add_numbers(a, b): return a + b"
+```
+
+For multi-line input:
+
+```powershell
+python scripts\summarize.py
+```
+
+## Evaluation
+
+The evaluation script uses examples from the official CodeSearchNet test split and reports:
 
 - cross-entropy loss
 - perplexity
@@ -70,36 +101,27 @@ Evaluation uses examples from the official CodeSearchNet test split and reports:
 - ROUGE-1
 - ROUGE-L
 
-Results are saved to:
+Results are saved in:
 
 ```text
 outputs/evaluation_results.json
 ```
 
-## Inference
+## Usage
 
-Summarize a single-line Python function:
-
-```powershell
-python scripts\summarize.py --input "def add_numbers(a, b): return a + b"
-```
-
-For multi-line input, run:
+Example command:
 
 ```powershell
-python scripts\summarize.py
+python scripts\summarize.py --input "def is_even(n): return n % 2 == 0"
 ```
 
-Then paste the function into the terminal and press Enter on an empty line to generate the summary. Type `exit` on the first line to quit.
-
-Example:
+Example output:
 
 ```text
->>> def is_even(n):
-...     return n % 2 == 0
-...
 Generated Summary: Check if the
 ```
+
+For interactive multi-line input, paste the Python function into the terminal and press Enter on an empty line to generate the summary. Type `exit` on the first line to quit.
 
 ## Project Structure
 
@@ -117,4 +139,4 @@ mlsaProject/
 
 ## Notes
 
-The final model is a custom baseline trained from scratch on CPU. Its outputs are sometimes incomplete or generic, but the project includes the full workflow required for code summarization: preprocessing, tokenization, model training, validation, evaluation, and command-line inference.
+This is a custom baseline model trained from scratch on CPU. The generated summaries can be incomplete or generic, but the project includes the full workflow for preprocessing, tokenization, model training, validation, evaluation, and command-line inference.
