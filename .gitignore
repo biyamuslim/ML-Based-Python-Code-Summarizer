@@ -1,0 +1,26 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# Local dataset files
+data/*.zip
+data/**/*.jsonl
+data/**/*.json
+
+# Large or temporary training checkpoints
+outputs/checkpoint*.pt
+
+# Optional experiments not needed for the main submission
+archive/
+
+# Local/editor files
+.vscode/
+.idea/
+.DS_Store
+
+# Environment files
+.env

@@ -1,0 +1,73 @@
+{
+  "average_loss": 6.48926184797287,
+  "average_perplexity": 658.0372924804688,
+  "token_accuracy": 0.07676472541337406,
+  "exact_match_rate": 0.0,
+  "average_bleu": 2.9004001575290387e-81,
+  "average_rouge1": 0.11141457028875355,
+  "average_rougeL": 0.10772264439169885,
+  "num_examples": 1000,
+  "beam_size": 5,
+  "examples": [
+    {
+      "code": "def get_vid_from_url(url):\n        \"\"\"Extracts video ID from URL.\n        \"\"\"\n        return match1(url, r'youtu\\.be/([^?/]+)') or \\\n          match1(url, r'youtube\\.com/embed/([^/?]+)') or \\\n          match1(url, r'youtube\\.com/v/([^/?]+)') or \\\n          match1(url, r'youtube\\.com/watch/([^/?]+)') or \\\n          parse_query_param(url, 'v') or \\\n          parse_query_param(parse_query_param(url, 'u'), 'v')",
+      "reference": "extracts video id from url",
+      "generated": "Args:param",
+      "loss": 5.406235694885254,
+      "perplexity": 222.79135131835938,
+      "token_accuracy": 0.125,
+      "exact_match": false,
+      "bleu": 0,
+      "rouge1": 0.0,
+      "rougeL": 0.0
+    },
+    {
+      "code": "def sina_xml_to_url_list(xml_data):\n    \"\"\"str->list\n    Convert XML to URL List.\n    From Biligrab.\n    \"\"\"\n    rawurl = []\n    dom = parseString(xml_data)\n    for node in dom.getElementsByTagName('durl'):\n        url = node.getElementsByTagName('url')[0]\n        rawurl.append(url.childNodes[0].data)\n    return rawurl",
+      "reference": "str list convert xml to url list",
+      "generated": "Args: list of",
+      "loss": 7.680728435516357,
+      "perplexity": 2166.197021484375,
+      "token_accuracy": 0.09090909090909091,
+      "exact_match": false,
+      "bleu": 3.648956622645728e-232,
+      "rouge1": 0.2,
+      "rougeL": 0.2
+    },
+    {
+      "code": "def makeMimi(upid):\n    \"\"\"From http://cdn37.atwikiimg.com/sitescript/pub/dksitescript/FC2.site.js\n    Also com.hps.util.fc2.FC2EncrptUtil.makeMimiLocal\n    L110\"\"\"\n    strSeed = \"gGddgPfeaf_gzyr\"\n    prehash = upid + \"_\" + strSeed\n    return md5(prehash.encode('utf-8')).hexdigest()",
+      "reference": "from <URL> also com hps util fc <NUM> fc <NUM> encrptutil makemimilocal l <NUM>",
+      "generated": "Return a list of",
+      "loss": 9.081276893615723,
+      "perplexity": 8789.181640625,
+      "token_accuracy": 0.0,
+      "exact_match": false,
+      "bleu": 0,
+      "rouge1": 0.0,
+      "rougeL": 0.0
+    },
+    {
+      "code": "def fc2video_download(url, output_dir = '.', merge = True, info_only = False, **kwargs):\n    \"\"\"wrapper\"\"\"\n    #'http://video.fc2.com/en/content/20151021bTVKnbEw'\n    #'http://xiaojiadianvideo.asia/content/20151021bTVKnbEw'\n    #'http://video.fc2.com/ja/content/20151021bTVKnbEw'\n    #'http://video.fc2.com/tw/content/20151021bTVKnbEw'\n    hostname = urlparse(url).hostname\n    if not ('fc2.com' in hostname or 'xiaojiadianvideo.asia' in hostname):\n        return False\n    upid = match1(url, r'.+/content/(\\w+)')\n\n    fc2video_download_by_upid(upid, output_dir, merge, info_only)",
+      "reference": "wrapper",
+      "generated": "Create a `DataBunch`",
+      "loss": 6.143242835998535,
+      "perplexity": 465.56085205078125,
+      "token_accuracy": 0.0,
+      "exact_match": false,
+      "bleu": 0,
+      "rouge1": 0.0,
+      "rougeL": 0.0
+    },
+    {
+      "code": "def dailymotion_download(url, output_dir='.', merge=True, info_only=False, **kwargs):\n    \"\"\"Downloads Dailymotion videos by URL.\n    \"\"\"\n\n    html = get_content(rebuilt_url(url))\n    info = json.loads(match1(html, r'qualities\":({.+?}),\"'))\n    title = match1(html, r'\"video_title\"\\s*:\\s*\"([^\"]+)\"') or \\\n            match1(html, r'\"title\"\\s*:\\s*\"([^\"]+)\"')\n    title = unicodize(title)\n\n    for quality in ['1080','720','480','380','240','144','auto']:\n        try:\n            real_url = info[quality][1][\"url\"]\n            if real_url:\n                break\n        except KeyError:\n            pass\n\n    mime, ext, size = url_info(real_url)\n\n    print_info(site_info, title, mime, size)\n    if not info_only:\n        download_urls([real_url], title, ext, size, output_dir=output_dir, merge=merge)",
+      "reference": "downloads dailymotion videos by url",
+      "generated": "Create a list of",
+      "loss": 6.997777462005615,
+      "perplexity": 1094.1986083984375,
+      "token_accuracy": 0.08333333333333333,
+      "exact_match": false,
+      "bleu": 0,
+      "rouge1": 0.0,
+      "rougeL": 0.0
+    }
+  ]
+}

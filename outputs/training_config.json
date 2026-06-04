@@ -1,0 +1,24 @@
+{
+  "architecture": "LSTM Seq2Seq with attention",
+  "data_limit": 15000,
+  "epochs": 10,
+  "batch_size": 32,
+  "learning_rate": 0.0005,
+  "gradient_clip": 1.0,
+  "seed": 42,
+  "tokenizer": "Byte-Level BPE",
+  "input_columns": [
+    "func_name",
+    "code"
+  ],
+  "target_column": "target_summary",
+  "bpe_vocab_size": 8000,
+  "min_freq": 2,
+  "dropout": 0.0,
+  "max_code_len": 160,
+  "max_doc_len": 25,
+  "resume_training": true,
+  "checkpoint_path": "D:/mlsa_outputs\\checkpoint.pt",
+  "light_checkpoint_path": "D:/mlsa_outputs\\checkpoint_light.pt",
+  "output_dir": "D:/mlsa_outputs"
+}
