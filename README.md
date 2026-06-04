@@ -2,8 +2,6 @@
 
 A PyTorch-based Python code summarization tool that generates short natural language summaries for Python functions. The project uses a custom LSTM sequence-to-sequence model with attention and Byte-Level BPE tokenization.
 
-The project does not use a pretrained full language model. The tokenizer and neural model are trained as part of the project pipeline.
-
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -15,6 +13,7 @@ The project does not use a pretrained full language model. The tokenizer and neu
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Notes](#notes)
+- [License](#license)
 
 ## Getting Started
 
@@ -62,6 +61,8 @@ Test data:     D:/datasets/codesearchnet/python/python/final/jsonl/test
 ```
 
 The dataset itself is not included in the repository.
+
+If your dataset is stored in a different location, update `DATASET_PATH` and `TEST_DATASET_PATH` in `src/config.py`.
 
 ## Running the Application
 
@@ -140,3 +141,7 @@ mlsaProject/
 ## Notes
 
 This is a custom baseline model trained from scratch on CPU. The generated summaries can be incomplete or generic, but the project includes the full workflow for preprocessing, tokenization, model training, validation, evaluation, and command-line inference.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
