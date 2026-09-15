@@ -45,7 +45,7 @@ class Decoder(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.attention = Attention(hidden_dim)
         # decoder LSTM input is embedded previous token + attention context
-        self.lstm = nn.LSTM(embed_dim + hidden_dim, hidden_dim, batch_first=True)
+        self.lstm = nn.LSTM(embed_dim + hidden_dim, hidden_dim, batch_first=True) #batch_first=True means input and output tensors are (batch, seq, feature)
         # predicts next token 
         self.fc = nn.Linear(embed_dim + hidden_dim * 2, output_dim)
 

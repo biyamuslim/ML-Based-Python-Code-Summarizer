@@ -228,7 +228,7 @@ for epoch in range(start_epoch, EPOCHS):
         src = batch['code'].to(device)
         trg = batch['doc'].to(device)
 
-        optimizer.zero_grad() # reset accumulated gradients from previous batch
+        optimizer.zero_grad() # # clear old gradients
         output = model(src, trg)
 
         output_dim = output.shape[-1]
@@ -236,11 +236,11 @@ for epoch in range(start_epoch, EPOCHS):
         trg = trg[:, 1:].reshape(-1)
 
         loss = criterion(output, trg)
-        loss.backward()
+        loss.backward() # calculate new gradients  
 
         # Clip gradients  prevents the model weights from being updated too aggressively by limiting large gradients, which helps keep LSTM training stable..
         torch.nn.utils.clip_grad_norm_(model.parameters(), CLIP)
-        optimizer.step()
+        optimizer.step() # update model weights
         total_train_loss += loss.item()
 
         if i % 10 == 0:
