@@ -228,7 +228,7 @@ for epoch in range(start_epoch, EPOCHS):
         src = batch['code'].to(device)
         trg = batch['doc'].to(device)
 
-        optimizer.zero_grad() # # clear old gradients
+        optimizer.zero_grad() # clear old gradients
         output = model(src, trg)
 
         output_dim = output.shape[-1]

@@ -170,10 +170,8 @@ def save_vocab(code_vocab, doc_vocab, output_dir="outputs"):
 
 def train_bpe_tokenizer(df, vocab_size=20000, min_frequency=2, output_path="outputs/tokenizer.json"):
     """Train one BPE tokenizer on both Python code and docstrings."""
-    tokenizer = Tokenizer(BPE(unk_token="<UNK>"))
-    tokenizer.pre_tokenizer = ByteLevel(add_prefix_space=False)
-    tokenizer.decoder = ByteLevelDecoder()
-
+    tokenizer = Tokenizer(BPE(unk_token="<UNK>")) # create a BPE tokenizer with an unknown token
+    tokenizer.pre_tokenizer = ByteLevel(add_prefix_space=False) # use Byte-Level representation before applying BPE
     trainer = BpeTrainer(
         vocab_size=vocab_size,
         min_frequency=min_frequency,
