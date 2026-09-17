@@ -56,14 +56,14 @@ class Decoder(nn.Module):
         # Use attention to build a context vector from the encoder outputs.
         attention = self.attention(hidden, encoder_outputs).unsqueeze(1)
         context = torch.bmm(attention, encoder_outputs)
-        lstm_input = torch.cat((embedded, context), dim=2)
+        lstm_input = torch.cat((embedded, context), dim=2) # 64 dimension embedding combined with 128 dimension contect vector = 192 dimension input to LSTM
 
         output, (hidden, cell) = self.lstm(lstm_input, (hidden, cell))
-        prediction_features = self.dropout(torch.cat(
+        prediction_features = self.dropout(torch.cat( #combine all three features to predict the next token in the summary.
             (output.squeeze(1), context.squeeze(1), embedded.squeeze(1)),
             dim=1
         ))
-        prediction = self.fc(prediction_features)
+        prediction = self.fc(prediction_features) #output layer
 
         return prediction, hidden, cell
 
